@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-@file_data = File.read('02-input.txt').split(/\n/)
+@file_data = File.read('02_input.txt').split(/\n/)
 
 def strategy_guide(array)
   return if array.nil?
@@ -12,15 +12,15 @@ def strategy_guide(array)
     total_score += 2 if duel[1] == 'Y'
     total_score += 3 if duel[1] == 'Z'
 
+    # winning
     if  (duel[1] == 'X' && duel[0] == 'C') ||
         (duel[1] == 'Y' && duel[0] == 'A') ||
         (duel[1] == 'Z' && duel[0] == 'B')
       total_score += 6
-    end
-
-    if  (duel[1] == 'X' && duel[0] == 'A') ||
-        (duel[1] == 'Y' && duel[0] == 'B') ||
-        (duel[1] == 'Z' && duel[0] == 'C')
+    # drawing
+    elsif (duel[1] == 'X' && duel[0] == 'A') ||
+          (duel[1] == 'Y' && duel[0] == 'B') ||
+          (duel[1] == 'Z' && duel[0] == 'C')
       total_score += 3
     end
   end

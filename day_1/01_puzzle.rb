@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # split input into array based on empty lines
-@file_data = File.read('01-input.txt').split(/\n\n/)
+@file_data = File.read('01_input.txt').split(/\n\n/)
 
 def max_calories(array)
   max = 0
