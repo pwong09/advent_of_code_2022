@@ -50,14 +50,7 @@ module ElvesData
   # @returns Array (2 elements) within an Array (n elements) - [ [1, 2], [3, 4] ]
   def split_pairs(array)
     pairs = array.map { |pair| pair.split(',') }.map do |pair|
-      pair1 = pair.first.split('-')
-      pair2 = pair.last.split('-')
-      pair11 = pair1.first.to_i
-      pair12 = pair1.last.to_i
-      pair21 = pair2.first.to_i
-      pair22 = pair2.last.to_i
-
-      [[pair11, pair12], [pair21, pair22]]
+      [pair[0].split('-').map(&:to_i), pair[1].split('-').map(&:to_i)]
     end
     translate_to_range(pairs)
   end
@@ -69,29 +62,22 @@ module ElvesData
   # Example - [ [ [0, 1, 2], [1, 2, 3] ], [ [2, 3, 4], [5, 6, 7] ] ]
   def translate_to_range(pairs)
     pairs.map do |pair|
-      range1 = (pair[0][0]..pair[0][1]).to_a
-      range2 = (pair[1][0]..pair[1][1]).to_a
-
-      [range1, range2]
+      [(pair[0][0]..pair[0][1]).to_a, (pair[1][0]..pair[1][1]).to_a]
     end
   end
 
   def check_overlap(pair, type = 'full')
     count = 0
-    range1 = pair[0]
-    range2 = pair[1]
 
     case type
     when 'full'
-      if range1.length > range2.length
-        count += 1 if range1.include?(range2[0]) && range1.include?(range2[-1])
-      elsif range2.include?(range1[0]) && range2.include?(range1[-1])
+      if  pair[0].include?(pair[1][0]) && pair[0].include?(pair[1][-1]) ||
+          pair[1].include?(pair[0][0]) && pair[1].include?(pair[0][-1])
         count += 1
       end
     when 'any'
-      if range1.length > range2.length
-        count += 1 if range1.include?(range2[0]) || range1.include?(range2[-1])
-      elsif range2.include?(range1[0]) || range2.include?(range1[-1])
+      if  (pair[0].include?(pair[1][0]) || pair[0].include?(pair[1][-1])) ||
+          pair[1].include?(pair[0][0]) || pair[1].include?(pair[0][-1])
         count += 1
       end
     end
