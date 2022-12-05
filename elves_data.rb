@@ -84,4 +84,11 @@ module ElvesData
 
     count
   end
+
+  def translate_move(array)
+    array.map do |move|
+      move = move.split(' ')
+      [move[1].to_i, move[3], move[5]]
+    end
+  end
 end
