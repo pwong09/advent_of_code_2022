@@ -7,23 +7,14 @@ include ElvesData
 file_data = ElvesData.read_file('../input/04_input.txt', /\n/)
 
 def find_full_overlap(array)
-  points = 0
-  pairs = ElvesData.split_pairs(array)
-
-  pairs.each { |pair| points += ElvesData.check_overlap(pair, 'full') }
-  points
+  ElvesData.split_pairs(array).reduce(0) { |sum, pair| sum + ElvesData.check_overlap(pair) }
 end
 
 puts 'full range overlap'
 puts find_full_overlap(file_data)
 
 def find_any_overlap(array)
-  points = 0
-  pairs = ElvesData.split_pairs(array)
-
-  pairs.each { |pair| points += ElvesData.check_overlap(pair, 'any') }
-
-  points
+  ElvesData.split_pairs(array).reduce(0) { |sum, pair| sum + ElvesData.check_overlap(pair, 'any') }
 end
 
 puts 'any section overlap'
