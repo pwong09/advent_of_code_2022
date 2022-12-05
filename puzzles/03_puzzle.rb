@@ -10,42 +10,31 @@ include ElvesData
 
 def common_items(array)
   points = 0
-  rucksacks = split_list(array)
+  rucksacks = ElvesData.split_list(array)
 
   rucksacks.each do |rucksack|
-    shared_items = []
-    rucksack.first.each_char { |item| shared_items.push(item) if rucksack.last.include?(item) }
-    shared_items.uniq.each { |item| points += @hash[item] }
+    compartment1 = rucksack[0].split('')
+    compartment2 = rucksack [1].split('')
+
+    compartment1.map { |item| item if compartment2.include?(item) }
+                .compact.uniq.each { |item| points += @hash[item] }
   end
 
   points
-end
-
-def split_list(array)
-  array.map do |rucksack|
-    mid_idx = rucksack.length / 2
-    first_compartment = rucksack.slice(0, mid_idx)
-    second_compartment = rucksack.slice(mid_idx, rucksack.length)
-
-    [first_compartment, second_compartment]
-  end
 end
 
 puts common_items(@file_data)
 
-def find_badge(array)
+def badge(array)
   points = 0
-  groups = array.each_slice(3).to_a
+  groups = ElvesData.group_of_three(array)
 
   groups.each do |group|
-    shared_items = []
-    group.first.each_char do |item|
-      shared_items.push(item) if group[1].include?(item) && group.last.include?(item)
-    end
-    points += @hash[shared_items.uniq.first]
+    group[0].map { |item| item if group[1].include?(item) && group[2].include?(item) }.compact
+            .uniq.each { |item| points += @hash[item] }
   end
 
   points
 end
 
-puts find_badge(@file_data)
+puts badge(@file_data)
