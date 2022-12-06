@@ -6,6 +6,32 @@ include ElvesData
 
 moves_data = ElvesData.read_file('../input/05_input.txt', /\n/)[10..]
 
+stacks_data = ElvesData.read_file('../input/05_input.txt', /\n\n/)[0..9]
+
+puts stacks_data[0].split('\n')
+
+# def rotate_stacks(data)
+#   col_width = 4
+#   rotated_stack = []
+#   rows = data.split('\n')
+
+#   for (let z = rows.length - 2; z >= 0; z--) {
+#     row = rows[z]
+#     this_col = 9
+#     for (let i = row.length - 1; i >= 0; i -= colWidth) {
+#       if (!Array.isArray(rotatedStack[thisCol])) {
+#         rotatedStack[thisCol] = [];
+#       }
+
+#       this_cell = row[i - 1];
+#       if (this_cell != ' ') rotated_stack[this_col].push(this_cell);
+#       this_col -= 1
+#       if (this_col == 0) this_col = 9;
+#     }
+#   }
+#   this.stacks = rotatedStack;
+# end
+
 @stacks = { '1' => ['S', 'T', 'H', 'F', 'W', 'R'],
             '2' => ['S', 'G', 'D', 'Q', 'W'],
             '3' => ['B', 'T', 'W'],
