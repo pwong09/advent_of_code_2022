@@ -2,6 +2,7 @@
 
 require '../elves_data'
 
+# Standard Node class
 class Node
   attr_accessor :name, :parent
 
@@ -15,6 +16,7 @@ class Node
   end
 end
 
+# Inherits Node class, represents a file
 class FileNode < Node
   attr_reader :size
 
@@ -24,6 +26,7 @@ class FileNode < Node
   end
 end
 
+# Inherits Node class, represents directory
 class DirNode < Node
   attr_reader :children
 
@@ -44,11 +47,11 @@ def parse_ls(lines, cwd)
   lines.each do |line|
     arg, name = line.split(' ')
 
-    if arg == 'dir'
-      cwd.children[name] = DirNode.new(cwd, name)
-    else
-      cwd.children[name] = FileNode.new(cwd, name, arg.to_i)
-    end
+    cwd.children[name] =  if arg == 'dir'
+                            DirNode.new(cwd, name)
+                          else
+                            FileNode.new(cwd, name, arg.to_i)
+                          end
   end
 end
 
